@@ -176,4 +176,17 @@ abstract class Enum
 
         throw new \BadMethodCallException("No static method or enum constant '{$name}' in class " . static::class);
     }
+
+    /**
+     * Show key and value on dump.
+     *
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        return [
+            'key'   => $this->getKey(),
+            'value' => $this->value,
+        ];
+    }
 }
