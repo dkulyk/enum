@@ -1,5 +1,6 @@
 {
     "name": "b2b/enum",
+    "license": "MIT",
     "type": "library",
     "description": "PHP Enum implementation",
     "keywords": ["enum"],
@@ -10,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=7.1.0"
+        "php": ">=7.0.0"
     },
     "autoload": {
         "psr-4": {
