@@ -16,13 +16,13 @@ This Enum class is not intended to replace class constants, but only to be used 
 ## Installation
 
 ```
-composer require b2b/enum
+composer require dkulyk/enum
 ```
 
 ## Declaration
 
 ```php
-use B2B\Enum\Enum;
+use DKulyk\Enum\Enum;
 
 /**
  * Action enum

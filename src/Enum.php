@@ -1,7 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace B2B\Enum;
+namespace DKulyk\Enum;
+
+use BadMethodCallException;
+use UnexpectedValueException;
 
 /**
  * Base Enum class
@@ -38,7 +41,7 @@ abstract class Enum
     public function __construct($value)
     {
         if (!static::isValid($value)) {
-            throw new \UnexpectedValueException("Value '{$value}' is not part of the enum " . static::class);
+            throw new UnexpectedValueException("Value '{$value}' is not part of the enum " . static::class);
         }
 
         $this->value = $value;
@@ -114,7 +117,7 @@ abstract class Enum
     public static function toArray(): array
     {
         $class = get_called_class();
-        if (!\array_key_exists(static::class, static::$cache)) {
+        if (! array_key_exists(static::class, static::$cache)) {
             /** @noinspection PhpUnhandledExceptionInspection */
             static::$cache[$class] = (new \ReflectionClass(static::class))->getConstants();
         }
@@ -131,7 +134,7 @@ abstract class Enum
      */
     public static function isValid($value): bool
     {
-        return \in_array($value, static::toArray(), true);
+        return in_array($value, static::toArray(), true);
     }
 
     /**
@@ -143,7 +146,7 @@ abstract class Enum
      */
     public static function isValidKey($key): bool
     {
-        return \array_key_exists($key, static::toArray());
+        return array_key_exists($key, static::toArray());
     }
 
     /**
@@ -155,7 +158,7 @@ abstract class Enum
      */
     public static function search($value)
     {
-        return \array_search($value, static::toArray(), true);
+        return array_search($value, static::toArray(), true);
     }
 
     /**
@@ -174,7 +177,7 @@ abstract class Enum
             return new static($array[$name]);
         }
 
-        throw new \BadMethodCallException("No static method or enum constant '{$name}' in class " . static::class);
+        throw new BadMethodCallException("No static method or enum constant '{$name}' in class " . static::class);
     }
 
     /**
