@@ -22,7 +22,7 @@ class EnumCast implements CastsAttributes
      */
     public function __construct(string $enum)
     {
-        if (class_exists($enum)) {
+        if (! class_exists($enum)) {
             throw new RuntimeException("Enum class '{$enum}' not found");
         }
 
@@ -38,7 +38,9 @@ class EnumCast implements CastsAttributes
      */
     public function get($model, string $key, $value, array $attributes)
     {
-        return new ($this->enum)(ctype_digit($value) ? (int) $value : $value);
+        $class = $this->enum;
+
+        return new $class(ctype_digit($value) ? (int) $value : $value);
     }
 
     /**
