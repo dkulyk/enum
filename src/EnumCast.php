@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace DKulyk\Enum;
@@ -14,20 +15,27 @@ class EnumCast implements CastsAttributes
     /**
      * @var string
      */
-    private $enum;
+    protected $enum;
+
+    /**
+     * @var string|null
+     */
+    public static $enumName;
 
     /**
      * EnumCast constructor.
      * @param  string  $enum
      */
-    public function __construct(string $enum)
+    public function __construct(string $enum = null)
     {
-        if (! class_exists($enum)) {
+        $enum = $enum ?? static::$enumName;
+
+        if (is_null($enum) || ! class_exists($enum)) {
             throw new RuntimeException("Enum class '{$enum}' not found");
         }
 
         if (! is_a($enum, Enum::class, true)) {
-            throw new RuntimeException("Enum class '{$enum}' must be extended from " . Enum::class);
+            throw new RuntimeException("Enum class '{$enum}' must be extended from ".Enum::class);
         }
 
         $this->enum = $enum;

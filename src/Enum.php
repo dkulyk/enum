@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace DKulyk\Enum;
 
 use BadMethodCallException;
+use Illuminate\Contracts\Database\Eloquent\Castable;
 use UnexpectedValueException;
 
 /**
@@ -15,7 +17,7 @@ use UnexpectedValueException;
  * @author Mirosław Filip <mirfilip@gmail.com>
  * @author Dmytro Kulyk <lnkvisitor.ts@gmail.com>
  */
-abstract class Enum
+abstract class Enum implements Castable
 {
     /**
      * Enum value
@@ -34,14 +36,14 @@ abstract class Enum
     /**
      * Creates a new value of some type
      *
-     * @param mixed $value
+     * @param  mixed  $value
      *
      * @throws \UnexpectedValueException if incompatible type is given.
      */
     public function __construct($value)
     {
-        if (!static::isValid($value)) {
-            throw new UnexpectedValueException("Value '{$value}' is not part of the enum " . static::class);
+        if (! static::isValid($value)) {
+            throw new UnexpectedValueException("Value '{$value}' is not part of the enum ".static::class);
         }
 
         $this->value = $value;
@@ -76,7 +78,7 @@ abstract class Enum
     /**
      * Compares one Enum with another.
      *
-     * @param Enum $enum
+     * @param  Enum  $enum
      *
      * @return bool True if Enums are equal, false if not equal
      */
@@ -164,8 +166,8 @@ abstract class Enum
     /**
      * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
      *
-     * @param string $name
-     * @param array  $arguments
+     * @param  string  $name
+     * @param  array  $arguments
      *
      * @return static
      * @throws \BadMethodCallException
@@ -177,7 +179,7 @@ abstract class Enum
             return new static($array[$name]);
         }
 
-        throw new BadMethodCallException("No static method or enum constant '{$name}' in class " . static::class);
+        throw new BadMethodCallException("No static method or enum constant '{$name}' in class ".static::class);
     }
 
     /**
@@ -188,8 +190,30 @@ abstract class Enum
     public function __debugInfo(): array
     {
         return [
-            'key'   => $this->getKey(),
+            'key' => $this->getKey(),
             'value' => $this->value,
         ];
+    }
+
+    /**
+     * @var array 
+     */
+    protected static $castCache = [];
+
+    /**
+     * @inheritDoc
+     */
+    public static function castUsing()
+    {
+        if(array_key_exists(static::class, self::$castCache)){
+            return self::$castCache[static::class];
+        }
+        $object = new class(static::class) extends EnumCast {
+            public static $enumName;
+        };
+        $class = get_class($object);
+        $class::$enumName = static::class;
+
+        return self::$castCache[static::class] = $class;
     }
 }
