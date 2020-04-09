@@ -196,7 +196,7 @@ abstract class Enum implements Castable
     }
 
     /**
-     * @var array 
+     * @var array
      */
     protected static $castCache = [];
 
@@ -205,15 +205,6 @@ abstract class Enum implements Castable
      */
     public static function castUsing()
     {
-        if(array_key_exists(static::class, self::$castCache)){
-            return self::$castCache[static::class];
-        }
-        $object = new class(static::class) extends EnumCast {
-            public static $enumName;
-        };
-        $class = get_class($object);
-        $class::$enumName = static::class;
-
-        return self::$castCache[static::class] = $class;
+        return new EnumCast(static::class);
     }
 }

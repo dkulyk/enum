@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "laravel/framework": ">=7.4.0",
+        "laravel/framework": ">=7.5.0",
         "ext-ctype": "*"
     },
     "autoload": {

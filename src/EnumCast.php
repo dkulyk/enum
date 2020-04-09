@@ -18,19 +18,12 @@ class EnumCast implements CastsAttributes
     protected $enum;
 
     /**
-     * @var string|null
-     */
-    public static $enumName;
-
-    /**
      * EnumCast constructor.
      * @param  string  $enum
      */
-    public function __construct(string $enum = null)
+    public function __construct(string $enum)
     {
-        $enum = $enum ?? static::$enumName;
-
-        if (is_null($enum) || ! class_exists($enum)) {
+        if (! class_exists($enum)) {
             throw new RuntimeException("Enum class '{$enum}' not found");
         }
 
