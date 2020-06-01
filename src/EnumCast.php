@@ -41,6 +41,10 @@ class EnumCast implements CastsAttributes
     {
         $class = $this->enum;
 
+        if (is_null($value)) {
+            return null;
+        }
+
         return new $class(ctype_digit($value) ? (int) $value : $value);
     }
 
@@ -49,6 +53,10 @@ class EnumCast implements CastsAttributes
      */
     public function set($model, string $key, $value, array $attributes)
     {
+        if (is_null($value)) {
+            return null;
+        }
+
         return [
             $key => $value instanceof Enum ? $value->getValue() : (string) $value,
         ];

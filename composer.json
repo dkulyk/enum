@@ -2,7 +2,7 @@
     "name": "dkulyk/enum",
     "license": "MIT",
     "type": "library",
-    "description": "PHP Enum implementation",
+    "description": "PHP Enum Laravel integration",
     "keywords": ["enum"],
     "authors": [
         {
@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "laravel/framework": ">=7.5.0",
-        "ext-ctype": "*"
+        "illuminate/contracts": "^7.5.0",
+        "myclabs/php-enum": "^1.7"
     },
     "autoload": {
         "psr-4": {
