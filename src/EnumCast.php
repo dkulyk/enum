@@ -6,6 +6,7 @@ namespace DKulyk\Enum;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use RuntimeException;
+use MyCLabs\Enum\Enum;
 
 /**
  * Class EnumCast

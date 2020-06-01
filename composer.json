@@ -11,6 +11,7 @@
         }
     ],
     "require": {
+        "ext-ctype": "*",
         "illuminate/contracts": "^7.5.0",
         "myclabs/php-enum": "^1.7"
     },
