@@ -55,7 +55,9 @@ class EnumCast implements CastsAttributes
     public function set($model, string $key, $value, array $attributes)
     {
         if (is_null($value)) {
-            return null;
+            return [
+                $key => null,
+            ];
         }
 
         return [
