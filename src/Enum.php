@@ -29,7 +29,7 @@ abstract class Enum extends MyCLabsEnum implements Castable
     /**
      * @inheritDoc
      */
-    public static function castUsing()
+    public static function castUsing(array $arguments = [])
     {
         return new EnumCast(static::class);
     }
